@@ -1,28 +1,34 @@
 const UserModel = require('../models/user.model');
+const mongoose = require('mongoose')
+const ObjectID = mongoose.Types.ObjectId
 
-function getAll() {
-    UserModel.find({})
+async function getAll() {
+    return await UserModel.find({})
         .select('_id email wallet_address')
         .then(users => {
             return users;
         });
 }
 
-function store(req) {
+async function store(req) {
     const user = new UserModel({
+        _id: ObjectID(),
         email: req.email,
         wallet_address: req.wallet_address,
     });
-    return user.save();
+    return await user.save();
 }
 
-function update(id, req) {
+async function update(id, req) {
     const user = new UserModel({});
-    user.updateOne({
+    return await user.updateOne({
         _id: id
     }, {
-        $set: req
-    });
+        $set: {
+            email: req.email,
+            wallet_address: req.wallet_address,
+        }
+    }).exec();
 }
 
 module.exports = {

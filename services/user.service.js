@@ -1,15 +1,15 @@
 const userRepository = require('../repositories/user.repository');
 
-function getAll(req) {
-    return userRepository.getAll(req);
+async function getAll(req) {
+    return await userRepository.getAll(req);
 }
 
-function store(user) {
-    return userRepository.store(user);
+async function store(user) {
+    return await userRepository.store(user);
 }
 
-function update(userId, user) {
-    return userRepository.update(userId, user);
+async function update(userId, user) {
+    return await userRepository.update(userId, user);
 }
 
 module.exports = {

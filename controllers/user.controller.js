@@ -1,42 +1,44 @@
 const userService = require('../services/user.service');
 
-function index(req, res) {
-    userService.getAll().then(users => {
-        return res.json({
-            message: 'success',
-            status: 1,
+async function index(req, res) {
+    try {
+        let users = await userService.getAll(req)
+        res.json({
             users: users
-        });
-    }).catch(error => {
+        })
+    }
+    catch (error) {
         next(error);
-    })
+    }
 }
 
-function update(req, res) {
+async function update(req, res) {
     const userId = req.params.id;
+    console.log(userId)
     const user = req.body;
-    userService.update(userId, user).then(user => {
-        return res.json({
-            message: 'success',
-            status: 1,
-            user: user
-        });
-    }).catch(error => {
+    console.log(user)
+    try {
+        let updatedUser = await userService.update(userId, user)
+        res.json({
+            updatedUser: updatedUser
+        })
+    }
+    catch (error) {
         next(error);
-    })
+    }
 }
 
-function store(req, res, next) {
-    const user = req.body;
-    userService.store(user).then(user => {
-        return res.json({
-            message: 'success',
-            status: 1,
-            user: user
-        });
-    }).catch(error => {
+async function store(req, res, next) {
+    try {
+        let reqData = req.body
+        let newUser = await userService.store(reqData)
+        res.json({
+            newUser: newUser
+        })
+    }
+    catch (error) {
         next(error);
-    })
+    }
 }
 
 module.exports = {

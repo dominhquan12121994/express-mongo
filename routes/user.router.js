@@ -8,6 +8,6 @@ router.use(authJwt);
 
 router.get('/', userController.index);
 router.post('/', userController.store);
-router.patch('/:id', userController.update);
+router.put('/:id', userController.update);
 
 module.exports = router;
